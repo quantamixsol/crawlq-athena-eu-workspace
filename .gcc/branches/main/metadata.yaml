@@ -1,0 +1,12 @@
+branch: main
+parent: null
+status: WORKING
+created: 2026-02-09T22:00:00Z
+last_updated: 2026-02-09T22:00:00Z
+locked_by: null
+environment:
+  runtime: python3.10
+  framework: next.js-14
+  region: eu-central-1
+file_tree: []
+open_questions: []

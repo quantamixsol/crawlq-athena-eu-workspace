@@ -1,0 +1,13 @@
+STEP 4: FOLLOW-UP (Context Test)
+Question: Based on your previous answer, what are the top 3 DPIA sections we need? Brief bullet points only.
+Time: 3.8s | Model: eu.anthropic.claude-opus-4-6-v1
+Confidence: RED (0.45)
+Context retained: YES
+
+Based on my DPIA template above, the **top 3 critical sections** are:
+
+- **System Description & Processing Overview** — defines what data is collected, how it flows, and where it's processed (Frankfurt, EU)
+
+- **Necessity, Proportionality & Lawful Basis** — establishes legal justification under Article 6 and Article 22 compliance for automated decision-making
+
+- **Risk Assessment & Mitigation** — identifies threats to data subjects' rights and documents safeguards to address them

@@ -1,0 +1,12 @@
+branch: feature-guest-conversion
+parent: feature-eu-standalone-app
+status: WORKING
+created: 2026-02-12T07:05:00Z
+last_updated: 2026-02-12T07:05:00Z
+locked_by: null
+environment:
+  runtime: node-20
+  framework: next-14
+  region: eu-central-1
+file_tree: []
+open_questions: []

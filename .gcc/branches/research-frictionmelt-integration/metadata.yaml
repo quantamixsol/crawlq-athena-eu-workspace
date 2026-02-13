@@ -1,0 +1,35 @@
+branch: research-frictionmelt-integration
+parent: feature-eu-standalone-app
+status: WORKING
+created: 2026-02-12T20:00:00Z
+last_updated: 2026-02-12T20:00:00Z
+locked_by: null
+environment:
+  runtime: research
+  framework: strategic-planning
+  region: global
+file_tree:
+  - path: .gcc/branches/research-frictionmelt-integration/commit.md
+    status: CREATED
+    purpose: Commit log for integration research branch
+  - path: .gcc/branches/research-frictionmelt-integration/metadata.yaml
+    status: CREATED
+    purpose: Branch metadata
+  - path: .gcc/branches/research-frictionmelt-integration/log.md
+    status: CREATED
+    purpose: Session activity log
+  - path: .gsm/summaries/FrictionMelt-AthenaEU-Integration-Strategy.summary.md
+    status: PLANNED
+    purpose: 800-token summary of integration strategy document
+  - path: .gsm/summaries/TRACE-Friction-Framework.summary.md
+    status: PLANNED
+    purpose: 800-token summary of research framework PDF
+  - path: .gsm/decisions/ADR-026-frictionmelt-athena-integration-architecture.md
+    status: PLANNED
+    purpose: Architecture decision for bidirectional product integration
+open_questions:
+  - How to maintain GDPR compliance when streaming behavioral data from EU to FrictionMelt (US-hosted)?
+  - What's the optimal polling interval for FrictionMelt predictions back to Athena EU?
+  - Should FrictionMelt Essentials be bundled free with Athena EU, or always paid?
+  - How to prevent customer confusion when two products have overlapping friction dashboards?
+  - What's the minimum viable integration (Phase 1) that demonstrates value?

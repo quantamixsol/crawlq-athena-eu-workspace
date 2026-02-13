@@ -1,0 +1,91 @@
+branch: feature-frictionmelt-integration
+parent: research-frictionmelt-integration
+status: MERGED
+created: 2026-02-12T21:15:00Z
+last_updated: 2026-02-13T17:00:00Z
+locked_by: null
+environment:
+  runtime: python-3.11
+  framework: aws-lambda + docker
+  region: eu-central-1
+file_tree:
+  - path: .gcc/branches/feature-frictionmelt-integration/commit.md
+    status: MODIFIED
+    purpose: Commit log for FrictionMelt integration implementation
+  - path: .gcc/branches/feature-frictionmelt-integration/metadata.yaml
+    status: MODIFIED
+    purpose: Branch metadata
+  - path: .gcc/checkpoints/2026-02-13_02-30_feature-frictionmelt-integration_7.md
+    status: CREATED
+    purpose: Checkpoint for COMMIT 7 (v2.0 implementation updates)
+  - path: crawlq-lambda/SemanticGraphEU/shared/schemas/v1/friction-event-schema.json
+    status: CREATED
+    purpose: Interface contract for Athena EU → FrictionMelt events
+  - path: crawlq-lambda/SemanticGraphEU/shared/schemas/v1/friction-enrichment-schema.json
+    status: CREATED
+    purpose: Interface contract for FrictionMelt → Athena EU enrichment response
+  - path: crawlq-lambda/SemanticGraphEU/shared/schemas/v1/friction-insights-schema.json
+    status: CREATED
+    purpose: Interface contract for FrictionMelt → Athena EU insights API
+  - path: crawlq-lambda/SemanticGraphEU/shared/friction_event_emitter.py
+    status: CREATED
+    purpose: Event emission class (writes to DynamoDB staging table)
+  - path: crawlq-lambda/SemanticGraphEU/EUFrictionEventBatcher/handler.py
+    status: CREATED
+    purpose: Lambda handler for batching and sending events to FrictionMelt API
+  - path: crawlq-lambda/SemanticGraphEU/EUFrictionEventBatcher/requirements.txt
+    status: CREATED
+    purpose: Lambda dependencies
+  - path: crawlq-lambda/SemanticGraphEU/EUFrictionEventBatcher/Dockerfile
+    status: CREATED
+    purpose: Lambda Docker image definition
+  - path: crawlq-lambda/SemanticGraphEU/EUFrictionEventBatcher/README.md
+    status: CREATED
+    purpose: Documentation for batcher Lambda
+  - path: crawlq-lambda/SemanticGraphEU/deploy_friction_infrastructure.sh
+    status: CREATED
+    purpose: Deployment script for Lambda + EventBridge + IAM
+  - path: crawlq-lambda/SemanticGraphEU/provision_aws.sh
+    status: MODIFIED
+    purpose: Added eu-friction-events DynamoDB table creation
+  - path: crawlq-lambda/SemanticGraphEU/tests/unit/test_friction_event_emitter.py
+    status: CREATED
+    purpose: Unit tests for FrictionEventEmitter class
+  - path: crawlq-lambda/SemanticGraphEU/tests/e2e/test_friction_event_flow.py
+    status: CREATED
+    purpose: E2E tests for event emission flow
+  - path: crawlq-ui/src/app/api/eu/friction/emit/route.ts
+    status: MODIFIED
+    purpose: Updated to accept v2.0 schema with optional suggestedPattern field
+  - path: crawlq-ui/src/components/chat/ResponseFeedback.tsx
+    status: MODIFIED
+    purpose: Updated to emit v2.0 events with ATHENA-PSY-014 pattern format
+  - path: FRICTIONMELT-ATHENA-EU-INTEGRATION-GUIDE-V2.md
+    status: CREATED
+    purpose: Complete v2.0 integration guide for FrictionMelt team (dynamic AI classification)
+  - path: athena-eu-pattern-library-v1.json
+    status: CREATED
+    purpose: Machine-readable JSON library of 91 patterns with ATHENA-* IDs
+  - path: FRICTIONMELT-V2-SUMMARY.md
+    status: CREATED
+    purpose: Executive summary of v1.0 → v2.0 architecture change
+  - path: FRICTIONMELT-COMPREHENSIVE-REQUIREMENTS.md
+    status: CREATED
+    purpose: Comprehensive v1.0 requirements (superseded by v2.0, but contains valuable pattern details)
+  - path: SEND-TO-FRICTIONMELT-TEAM.md
+    status: CREATED
+    purpose: Email template for v1.0 requirements (superseded by v2.0)
+  - path: COMPREHENSIVE-REQUIREMENTS-SUMMARY.md
+    status: CREATED
+    purpose: Summary of v1.0 comprehensive requirements
+  - path: frictionmelt-91-pattern-taxonomy.json
+    status: CREATED
+    purpose: v1.0 taxonomy JSON (superseded by athena-eu-pattern-library-v1.json)
+  - path: crawlq-chat-athena-eu-frontend/src/components/friction/TRACEEffectivenessDashboard.tsx
+    status: PLANNED
+    purpose: TRACE effectiveness visualization (displays FrictionMelt insights)
+open_questions:
+  - Should we send v2.0 or v1.0 requirements to FrictionMelt team? (RESOLVED: Send v2.0 INTEGRATION-GUIDE-V2.md)
+  - Which Lambda functions to instrument first? (EUChatAthenaBot, EUProcessDeepDocument, EUGraphBuilder?)
+  - Should we create eu-friction-insights table now or wait for insights poller Lambda? (Wait - Phase 2)
+  - What's the deployment order? (provision_aws.sh → deploy_friction_infrastructure.sh → instrument Lambdas)
