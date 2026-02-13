@@ -1,0 +1,70 @@
+branch: feature-tier3-async-markdown
+parent: feature-eu-chat-athena
+status: DONE
+created: 2026-02-11T14:00:00Z
+last_updated: 2026-02-11T14:23:32Z
+locked_by: null
+environment:
+  runtime: python3.10
+  framework: next.js-14
+  region: eu-central-1
+  amplify_app_id: d45bl3mgpjnhy
+  amplify_url: https://feature-trace-eu-frontend.d45bl3mgpjnhy.amplifyapp.com
+  git_branch: feature/trace-eu-frontend
+  aws_account: "680341090470"
+  lambda_role: arn:aws:iam::680341090470:role/eu-trace-lambda-execution-role
+file_tree:
+  - path: .gsm/decisions/ADR-012-tier3-async-markdown-architecture.md
+    status: CREATED
+    purpose: Complete architecture decision record (23KB, SQS + Lambda + S3 + DynamoDB + intelligent markdown processor)
+  - path: provision_tier3_infrastructure.py
+    status: CREATED
+    purpose: AWS infrastructure provisioning script (DynamoDB table + S3 bucket + SQS queue + IAM policies)
+  - path: TIER3_IMPLEMENTATION_GUIDE.md
+    status: CREATED
+    purpose: Comprehensive deployment guide (12KB, 7-day implementation plan with code examples)
+  - path: deploy_tier3_zip.py
+    status: CREATED
+    purpose: boto3-based Lambda deployment script (350 lines, ZIP packaging)
+  - path: test_tier3_e2e.py
+    status: CREATED
+    purpose: End-to-end test script (job submission → polling → markdown validation)
+  - path: tier3_function_urls.json
+    status: CREATED
+    purpose: Saved Lambda Function URLs for frontend integration
+  - path: .gsm/decisions/ADR-014-boto3-deployment-over-aws-cli.md
+    status: CREATED
+    purpose: Architecture decision record (boto3 vs AWS CLI for deployments)
+  - path: crawlq-lambda/SemanticGraphEU/EUChatJobQueue/
+    status: DEPLOYED
+    purpose: Async job queue Lambda (submit chat jobs) - Function URL configured
+  - path: crawlq-lambda/SemanticGraphEU/EUChatJobWorker/
+    status: DEPLOYED
+    purpose: Background worker Lambda (process jobs from SQS) - SQS trigger configured
+  - path: crawlq-lambda/SemanticGraphEU/EUChatJobStatus/
+    status: DEPLOYED
+    purpose: Job status polling endpoint - Function URL configured
+  - path: crawlq-lambda/SemanticGraphEU/shared/intelligent_markdown_processor.py
+    status: CREATED
+    purpose: Intelligent markdown processor module (400+ lines, 8 formatting features)
+  - path: crawlq-ui/src/components/chat-eu/EnterpriseMarkdownRenderer.tsx
+    status: CREATED
+    purpose: Enterprise-grade markdown rendering (500+ lines, Prism.js + mermaid + KaTeX)
+  - path: crawlq-ui/src/components/chat-eu/ChatJobProgressIndicator.tsx
+    status: CREATED
+    purpose: 5-stage progress bar component with icons and ETA
+  - path: crawlq-ui/src/hooks/useJobPolling.ts
+    status: MODIFIED
+    purpose: Job status polling hook updated with actual Function URLs
+open_questions:
+  - SQS chosen over Step Functions (simpler, no orchestration overhead) ✅
+  - S3 chosen for markdown storage (audit trail, presigned URLs, lifecycle) ✅
+  - Polling chosen (2s interval, React Query automatic retry) ✅
+  - Mermaid for diagrams (widely supported, react integration available) ✅
+  - boto3 chosen over AWS CLI (more reliable, already available, better error handling) ✅
+
+deployment_info:
+  queue_function_url: https://msby2wga4iovicryrw7swa2euy0kiaai.lambda-url.eu-central-1.on.aws/
+  status_function_url: https://d3fjrowuuyxxu2qoika22x2n6y0bqyzq.lambda-url.eu-central-1.on.aws/
+  sqs_trigger_uuid: 948a36b6-c8be-41ba-a08a-94062b0e5138
+  deployed_at: 2026-02-11T14:23:32Z

@@ -1,0 +1,24 @@
+branch: feature-eu-standalone-app
+parent: feature-eu-chat-athena
+status: DONE
+created: 2026-02-09T12:00:00Z
+last_updated: 2026-02-13T19:00:00Z
+locked_by: null
+environment:
+  runtime: node-20
+  framework: next-14
+  region: eu-central-1
+file_tree:
+  - path: crawlq-chat-athena-eu-frontend/
+    status: MODIFIED
+    purpose: Full Athena EU frontend (581 files migrated from crawlq-ui, Canvas removed)
+  - path: crawlq-athena-eu-backend/
+    status: MODIFIED
+    purpose: Full Athena EU backend (2203 files migrated from crawlq-lambda)
+  - path: crawlq-athena-eu-canvas/
+    status: CREATED
+    purpose: Standalone TRACE Canvas app (118 files, separate repo)
+  - path: .gsm/decisions/ADR-032-repo-isolation-enforcement.md
+    status: CREATED
+    purpose: CONSTITUTIONAL repo isolation rule — prevents drift back to crawlq-ui
+open_questions: []

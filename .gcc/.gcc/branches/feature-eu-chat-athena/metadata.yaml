@@ -1,0 +1,245 @@
+branch: feature-eu-chat-athena
+parent: main
+status: WORKING
+created: 2026-02-09T22:00:00Z
+last_updated: 2026-02-12T01:30:00Z
+locked_by: null
+environment:
+  runtime: python3.10
+  framework: next.js-14
+  region: eu-central-1
+  amplify_app_id: d45bl3mgpjnhy
+  amplify_url: https://feature-trace-eu-frontend.d45bl3mgpjnhy.amplifyapp.com
+  git_branch: feature/trace-eu-frontend
+  aws_account: "680341090470"
+  lambda_role: arn:aws:iam::680341090470:role/eu-trace-lambda-execution-role
+file_tree:
+  - path: crawlq-lambda/SemanticGraphEU/
+    status: MODIFIED
+    purpose: 17 EU Lambda functions (ZIP deploy, Python 3.10)
+  - path: crawlq-ui/src/components/chat-eu/
+    status: MODIFIED
+    purpose: EU chat UI components (ChatContainer, Sidebar, Toolbar, etc.)
+  - path: crawlq-ui/src/app/(protected)/chat-athena-eu/page.tsx
+    status: MODIFIED
+    purpose: EU chat page with sidebar, toolbar, guest modal
+  - path: crawlq-ui/src/store/chat-eu/useChatEUStore.ts
+    status: MODIFIED
+    purpose: Chat state store (memoryEnabled default false)
+  - path: crawlq-ui/src/queries/chat-eu/
+    status: EXISTING
+    purpose: React Query hooks for EU chat API calls
+  - path: crawlq-ui/src/config/region-config.ts
+    status: EXISTING
+    purpose: EU endpoint URLs and region detection
+  - path: redeploy_broken_eu_lambdas.py
+    status: CREATED
+    purpose: Redeployment script for broken Lambdas
+  - path: deploy_eu_chat_lambdas.py
+    status: CREATED
+    purpose: Initial deployment script for 3 chat Lambdas
+  - path: crawlq-ui/src/components/trace-eu/design-system.md
+    status: CREATED
+    purpose: Comprehensive design system (10KB, glassmorphism 2.0)
+  - path: crawlq-ui/src/components/trace-eu/trace-explainability-eu/types/trace-types-eu.ts
+    status: CREATED
+    purpose: Enhanced TypeScript types (600 lines, 5-tier confidence)
+  - path: crawlq-ui/src/components/trace-eu/shared-utils-eu.ts
+    status: CREATED
+    purpose: Shared utilities (25+ functions, type-safe)
+  - path: .gcc/branches/feature-eu-chat-athena/phase1-alignment-plan.md
+    status: CREATED
+    purpose: 5-week implementation roadmap (45KB)
+  - path: .gsm/decisions/ADR-013-us-region-non-interference-policy.md
+    status: CREATED
+    purpose: Hard policy - US code READ-ONLY
+  - path: crawlq-ui/src/components/trace-eu/trace-explainability-eu/ConfidenceBadgeEU.tsx
+    status: CREATED
+    purpose: 5-tier confidence badge (360 lines, Day 2)
+  - path: crawlq-ui/src/components/trace-eu/trace-explainability-eu/HumanExplanationEU.tsx
+    status: CREATED
+    purpose: Enhanced explanation display (280 lines, Day 2)
+  - path: crawlq-ui/src/components/trace-eu/trace-explainability-eu/TrustSignalEU.tsx
+    status: CREATED
+    purpose: Trust indicators with progress bars (430 lines, Day 3)
+  - path: crawlq-ui/src/components/trace-eu/trace-explainability-eu/LineageTimelineEU.tsx
+    status: CREATED
+    purpose: Decision lineage timeline (480 lines, Day 3)
+  - path: crawlq-ui/src/components/trace-eu/trace-explainability-eu/KeyFactorsEU.tsx
+    status: CREATED
+    purpose: Contributing factors with attribution (470 lines, Day 4)
+  - path: crawlq-ui/src/components/trace-eu/trace-explainability-eu/MetricsGridEU.tsx
+    status: CREATED
+    purpose: 6 explainability metrics (440 lines, Day 4)
+  - path: crawlq-ui/src/components/trace-eu/trace-explainability-eu/__tests__/TraceComponents.e2e.test.tsx
+    status: CREATED
+    purpose: Comprehensive E2E test suite (680 lines, 40+ tests)
+  - path: crawlq-ui/src/components/trace-eu/trace-explainability-eu/index.ts
+    status: MODIFIED
+    purpose: Barrel export for all components + types
+  - path: crawlq-ui/src/components/trace-eu/README.md
+    status: MODIFIED
+    purpose: Component documentation (Sprint 1 COMPLETE - 32.5% progress)
+  - path: crawlq-ui/src/components/trace-eu/trace-explainability-eu/TraceExplainabilityPanelEU.tsx
+    status: CREATED
+    purpose: Main TRACE panel with 7 sections (550 lines, Day 5)
+  - path: crawlq-ui/src/components/trace-eu/trace-explainability-eu/__tests__/TraceExplainabilityPanelEU.test.tsx
+    status: CREATED
+    purpose: Panel integration tests (320 lines, 18 tests)
+  # Sprint 2 - Knowledge Graph EU
+  - path: crawlq-ui/src/components/trace-eu/knowledge-graph-eu/types/kg-types-eu.ts
+    status: CREATED
+    purpose: KG types (300 lines, 14 entity types)
+  - path: crawlq-ui/src/components/trace-eu/knowledge-graph-eu/types/index.ts
+    status: CREATED
+    purpose: KG types barrel export
+  - path: crawlq-ui/src/components/trace-eu/knowledge-graph-eu/kg-utils-eu.ts
+    status: CREATED
+    purpose: KG utilities (350 lines, adapters+filters+search+stats+export)
+  - path: crawlq-ui/src/components/trace-eu/knowledge-graph-eu/GraphVisualizationEU.tsx
+    status: CREATED
+    purpose: SVG graph rendering (420 lines)
+  - path: crawlq-ui/src/components/trace-eu/knowledge-graph-eu/NodeCardEU.tsx
+    status: CREATED
+    purpose: Entity detail card (400 lines)
+  - path: crawlq-ui/src/components/trace-eu/knowledge-graph-eu/GraphControlsEU.tsx
+    status: CREATED
+    purpose: Zoom/pan/theme controls (180 lines)
+  - path: crawlq-ui/src/components/trace-eu/knowledge-graph-eu/GraphLegendEU.tsx
+    status: CREATED
+    purpose: Color-coded entity legend (160 lines)
+  - path: crawlq-ui/src/components/trace-eu/knowledge-graph-eu/GraphFilterEU.tsx
+    status: CREATED
+    purpose: Advanced 6-dimension filtering (320 lines)
+  - path: crawlq-ui/src/components/trace-eu/knowledge-graph-eu/GraphSearchEU.tsx
+    status: CREATED
+    purpose: Fuzzy search with match types (280 lines)
+  - path: crawlq-ui/src/components/trace-eu/knowledge-graph-eu/GraphStatsEU.tsx
+    status: CREATED
+    purpose: Statistics dashboard (290 lines)
+  - path: crawlq-ui/src/components/trace-eu/knowledge-graph-eu/GraphExportEU.tsx
+    status: CREATED
+    purpose: JSON/CSV export (190 lines)
+  - path: crawlq-ui/src/components/trace-eu/knowledge-graph-eu/KnowledgeGraphPanelEU.tsx
+    status: CREATED
+    purpose: Main KG integration panel (350 lines)
+  - path: crawlq-ui/src/components/trace-eu/knowledge-graph-eu/index.ts
+    status: CREATED
+    purpose: KG barrel exports (50 lines)
+  - path: crawlq-ui/src/components/trace-eu/knowledge-graph-eu/__tests__/KnowledgeGraph.e2e.test.tsx
+    status: CREATED
+    purpose: KG E2E tests (420 lines, 40+ tests)
+  - path: .gsm/decisions/ADR-014-eu-knowledge-graph-enhancements.md
+    status: CREATED
+    purpose: KG enhancement architecture decisions
+  # Sprint 3 - Document Analysis EU
+  - path: crawlq-ui/src/components/trace-eu/document-analysis-eu/types/doc-types-eu.ts
+    status: CREATED
+    purpose: Doc analysis types (200 lines, 5 severity levels, TRACE types)
+  - path: crawlq-ui/src/components/trace-eu/document-analysis-eu/types/index.ts
+    status: CREATED
+    purpose: Doc types barrel export
+  - path: crawlq-ui/src/components/trace-eu/document-analysis-eu/prompt-builder-eu.ts
+    status: CREATED
+    purpose: Enhanced TRACE prompt with EU regulations (240 lines)
+  - path: crawlq-ui/src/components/trace-eu/document-analysis-eu/ReportHeaderEU.tsx
+    status: CREATED
+    purpose: Audit summary + compliance badges (230 lines)
+  - path: crawlq-ui/src/components/trace-eu/document-analysis-eu/ScoreCardEU.tsx
+    status: CREATED
+    purpose: Animated gauge + 5-tier system (160 lines)
+  - path: crawlq-ui/src/components/trace-eu/document-analysis-eu/SummaryAndScoreEU.tsx
+    status: CREATED
+    purpose: Executive summary + score card (180 lines)
+  - path: crawlq-ui/src/components/trace-eu/document-analysis-eu/CriticalIssueSectionEU.tsx
+    status: CREATED
+    purpose: Compliance checkpoints with PASS/FAIL/WARNING/PENDING (250 lines)
+  - path: crawlq-ui/src/components/trace-eu/document-analysis-eu/TraceDashboardEU.tsx
+    status: CREATED
+    purpose: 5 TRACE panels with regulation subtitles (350 lines)
+  - path: crawlq-ui/src/components/trace-eu/document-analysis-eu/InsightCardEU.tsx
+    status: CREATED
+    purpose: Expandable TRACE dashboard + Fix Strategy (230 lines)
+  - path: crawlq-ui/src/components/trace-eu/document-analysis-eu/DocumentAnalysisPanelEU.tsx
+    status: CREATED
+    purpose: Main panel with sort/filter (280 lines)
+  - path: crawlq-ui/src/components/trace-eu/document-analysis-eu/index.ts
+    status: CREATED
+    purpose: Doc analysis barrel exports (50 lines)
+  - path: crawlq-ui/src/components/trace-eu/document-analysis-eu/__tests__/DocumentAnalysis.e2e.test.tsx
+    status: CREATED
+    purpose: Doc analysis E2E tests (400 lines, 40+ tests)
+  # Sprint 4 - Guest Flow EU
+  - path: crawlq-ui/src/components/trace-eu/guest-flow-eu/types/guest-types-eu.ts
+    status: CREATED
+    purpose: GDPR consent types, phases, processing phrases (120 lines)
+  - path: crawlq-ui/src/components/trace-eu/guest-flow-eu/types/index.ts
+    status: CREATED
+    purpose: Guest types barrel export
+  - path: crawlq-ui/src/components/trace-eu/guest-flow-eu/GuestUploadEU.tsx
+    status: CREATED
+    purpose: GDPR consent + drag-drop upload (300 lines)
+  - path: crawlq-ui/src/components/trace-eu/guest-flow-eu/GuestProcessingEU.tsx
+    status: CREATED
+    purpose: TRACE step indicators + animation (200 lines)
+  - path: crawlq-ui/src/components/trace-eu/guest-flow-eu/GuestResultsEU.tsx
+    status: CREATED
+    purpose: Guest analytics with locked insights (190 lines)
+  - path: crawlq-ui/src/components/trace-eu/guest-flow-eu/GuestConversionEU.tsx
+    status: CREATED
+    purpose: Conversion modal with 6 benefits (200 lines)
+  - path: crawlq-ui/src/components/trace-eu/guest-flow-eu/GuestFlowPanelEU.tsx
+    status: CREATED
+    purpose: Main flow orchestrator (210 lines)
+  - path: crawlq-ui/src/components/trace-eu/guest-flow-eu/index.ts
+    status: CREATED
+    purpose: Guest flow barrel exports (30 lines)
+  - path: crawlq-ui/src/components/trace-eu/guest-flow-eu/__tests__/GuestFlow.e2e.test.tsx
+    status: CREATED
+    purpose: Guest flow E2E tests (300 lines, 30+ tests)
+  - path: .gsm/decisions/ADR-015-eu-document-analysis-guest-flow.md
+    status: CREATED
+    purpose: Doc analysis + guest flow enhancement decisions
+  # Sprint 5 - Integration
+  - path: crawlq-ui/src/components/trace-eu/integration/useDocumentAnalysisEUStore.ts
+    status: CREATED
+    purpose: EU right panel state management (130 lines)
+  - path: crawlq-ui/src/components/trace-eu/integration/ToggleDeepDocumentsEU.tsx
+    status: CREATED
+    purpose: Sidebar Deep Analysis button (65 lines)
+  - path: crawlq-ui/src/components/trace-eu/integration/DeepDocumentListEU.tsx
+    status: CREATED
+    purpose: EU document list with TRACE badges (210 lines)
+  - path: crawlq-ui/src/components/trace-eu/integration/DeepDocumentUploadEU.tsx
+    status: CREATED
+    purpose: Upload with GDPR consent step (230 lines)
+  - path: crawlq-ui/src/components/trace-eu/integration/DeepDocumentDetailsEU.tsx
+    status: CREATED
+    purpose: Full analysis + KG overlay + Fix Strategy→Chat (200 lines)
+  - path: crawlq-ui/src/components/trace-eu/integration/RightPanelEU.tsx
+    status: CREATED
+    purpose: Panel orchestrator list/upload/details (110 lines)
+  - path: crawlq-ui/src/components/trace-eu/integration/GuestPageEU.tsx
+    status: CREATED
+    purpose: Guest page with EU branding (170 lines)
+  - path: crawlq-ui/src/components/trace-eu/integration/index.ts
+    status: CREATED
+    purpose: Integration barrel exports (40 lines)
+  - path: crawlq-ui/src/components/trace-eu/integration/__tests__/Integration.e2e.test.tsx
+    status: CREATED
+    purpose: Integration E2E tests (400 lines, 40+ tests)
+  - path: crawlq-ui/src/app/guest-eu/page.tsx
+    status: CREATED
+    purpose: EU guest route at /guest-eu
+  - path: crawlq-ui/src/app/(protected)/chat-athena-eu/page.tsx
+    status: MODIFIED
+    purpose: Added ResizablePanelGroup + RightPanelEU + useDocumentAnalysisEUStore
+  - path: crawlq-ui/src/components/chat-eu/ChatSidebar.tsx
+    status: MODIFIED
+    purpose: Added Deep Analysis button + onToggleDocuments props
+  - path: crawlq-ui/src/components/trace-eu/README.md
+    status: MODIFIED
+    purpose: Updated to v2.0.0 with full module architecture
+open_questions:
+  - Gemini fallback not available without google-genai (acceptable - Anthropic + OpenAI cover it)
+  - Production domain setup for Amplify (currently on feature branch URL)

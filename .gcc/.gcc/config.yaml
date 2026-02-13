@@ -1,0 +1,11 @@
+project: crawlq-eu-chat-athena
+description: CrawlQ EU Chat Athena - GDPR-compliant AI chat with TRACE compliance
+created: 2026-02-09T22:00:00Z
+token_budget:
+  session_start: 800
+  max_gcc_overhead_pct: 5
+  auto_commit_interval_min: 30
+defaults:
+  branch: feature-eu-chat-athena
+  region: eu-central-1
+  runtime: python3.10 + next.js 14

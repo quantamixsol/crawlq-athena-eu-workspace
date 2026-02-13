@@ -1,0 +1,31 @@
+branch: hotfix-insights-polling
+parent: feature-eu-standalone-app
+status: DONE
+created: 2026-02-12T06:00:00Z
+last_updated: 2026-02-12T06:30:00Z
+locked_by: null
+environment:
+  runtime: node-20
+  framework: next-14
+  region: eu-central-1
+file_tree:
+  - path: src/config/region-config.ts
+    status: MODIFIED
+    purpose: Fixed empty endpoint URLs for get-document-insights and get-insights
+  - path: src/hooks/useInsightsPolling.ts
+    status: CREATED
+    purpose: Custom polling hook for async document insights
+  - path: src/components/trace-eu/integration/DeepDocumentDetailsEU.tsx
+    status: MODIFIED
+    purpose: Added polling when insights are processing + progress animation
+  - path: src/components/trace-eu/integration/RightPanelEU.tsx
+    status: MODIFIED
+    purpose: Detects processing state in handleUploadSuccess
+  - path: src/components/trace-eu/guest-flow-eu/GuestFlowPanelEU.tsx
+    status: MODIFIED
+    purpose: Added polling in processing phase for guest flow
+  - path: src/queries/deep-document-analysis/upload-deep-document.ts
+    status: MODIFIED
+    purpose: Async-aware toast messages + documentId pass-through for guest uploads
+open_questions:
+  - Does /get-document-insights Lambda exist on API Gateway? If not, needs backend deployment.

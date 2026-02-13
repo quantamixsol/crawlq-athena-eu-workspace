@@ -1,0 +1,161 @@
+branch: feature-trace-canvas
+parent: feature-eu-standalone-app
+status: HANDOFF
+created: 2026-02-12T21:00:00Z
+last_updated: 2026-02-13T13:00:00Z
+locked_by: null
+environment:
+  runtime: node-20
+  framework: next-14
+  region: eu-central-1
+file_tree:
+  - path: .gsm/decisions/ADR-028-constitutional-non-breaking-implementation.md
+    status: CREATED
+    purpose: Constitutional principles guaranteeing zero breaking changes
+  - path: .gcc/branches/feature-trace-canvas/SPRINT_1_PLAN.md
+    status: CREATED
+    purpose: Sprint 1 plan for MVP Workflow Builder
+  - path: crawlq-ui/src/config/feature-flags.ts
+    status: CREATED
+    purpose: Feature flag system (ENABLE_TRACE_CANVAS, ENABLE_CANVAS_3D_GRAPH, ENABLE_CANVAS_COLLAB)
+  - path: crawlq-ui/src/types/canvas.ts
+    status: CREATED
+    purpose: TypeScript types (IWorkflowNode, INodeData, IExecutionResult, API contracts)
+  - path: infrastructure/canvas-table.yaml
+    status: CREATED
+    purpose: DynamoDB CloudFormation template (trace-canvas-documents table)
+  - path: CANVAS_DEPENDENCIES.md
+    status: CREATED
+    purpose: npm installation guide and bundle size analysis
+  - path: crawlq-ui/src/components/canvas/workflow/WorkflowCanvas.tsx
+    status: CREATED
+    purpose: Main React Flow canvas with drag-drop, zoom/pan, controls
+  - path: crawlq-ui/src/components/canvas/workflow/nodes/InputNode.tsx
+    status: CREATED
+    purpose: Input node (text/file/URL, status badges, character counter)
+  - path: crawlq-ui/src/components/canvas/workflow/nodes/LLMNode.tsx
+    status: CREATED
+    purpose: LLM configuration node (model selector, prompt editor, temperature/maxTokens)
+  - path: crawlq-ui/src/components/canvas/workflow/nodes/OutputNode.tsx
+    status: CREATED
+    purpose: Output display (markdown rendering, TRACE scores, export)
+  - path: crawlq-ui/src/components/canvas/workflow/ToolLibrary.tsx
+    status: CREATED
+    purpose: Drag-drop node palette
+  - path: crawlq-ui/src/components/canvas/workflow/WorkflowToolbar.tsx
+    status: CREATED
+    purpose: Canvas toolbar (Save, Load, Execute, Clear, Export)
+  - path: crawlq-ui/src/lib/canvas/workflowExecutor.ts
+    status: CREATED
+    purpose: Execution engine (topological sort, cycle detection, sequential execution)
+  - path: crawlq-ui/src/lib/canvas/canvasStore.ts
+    status: CREATED
+    purpose: Zustand state management (save/load, persistence)
+  - path: crawlq-ui/src/app/api/canvas/execute-llm/route.ts
+    status: CREATED
+    purpose: API route calling chat-athena-eu Lambda
+  - path: crawlq-ui/src/app/api/canvas/save/route.ts
+    status: CREATED
+    purpose: Save canvas to DynamoDB
+  - path: crawlq-ui/src/app/api/canvas/load/route.ts
+    status: CREATED
+    purpose: Load canvas from DynamoDB
+  - path: crawlq-ui/src/app/canvas/page.tsx
+    status: CREATED
+    purpose: Canvas listing page (empty state)
+  - path: crawlq-ui/src/app/canvas/new/page.tsx
+    status: CREATED
+    purpose: New canvas creation page
+  - path: crawlq-ui/src/app/canvas/layout.tsx
+    status: CREATED
+    purpose: Canvas layout (feature flag check, beta badge, navigation)
+  - path: crawlq-ui/src/components/canvas/shared/OpenInCanvasButton.tsx
+    status: CREATED
+    purpose: Integration button for DocumentAnalysisPanel (feature-flagged)
+  - path: crawlq-ui/src/components/canvas/shared/ComingSoonPage.tsx
+    status: CREATED
+    purpose: Feature-disabled fallback page
+  - path: crawlq-ui/__tests__/canvas/workflow/WorkflowCanvas.test.tsx
+    status: CREATED
+    purpose: Canvas unit tests (rendering, controls, store integration)
+  - path: crawlq-ui/__tests__/canvas/workflow/nodes/InputNode.test.tsx
+    status: CREATED
+    purpose: InputNode unit tests (status badges, character counter, onChange)
+  - path: crawlq-ui/__tests__/canvas/workflow/nodes/LLMNode.test.tsx
+    status: CREATED
+    purpose: LLMNode unit tests (model selection, prompt editing)
+  - path: crawlq-ui/__tests__/canvas/workflow/nodes/OutputNode.test.tsx
+    status: CREATED
+    purpose: OutputNode unit tests (TRACE scores, markdown, export)
+  - path: crawlq-ui/__tests__/canvas/lib/WorkflowExecutor.test.ts
+    status: CREATED
+    purpose: Execution engine tests (topological sort, cycle detection)
+  - path: crawlq-ui/__tests__/canvas/lib/canvasStore.test.ts
+    status: CREATED
+    purpose: State management tests (CRUD, save/load, persistence)
+  - path: crawlq-ui/__tests__/canvas/integration/workflow-execution.test.tsx
+    status: CREATED
+    purpose: End-to-end integration tests (linear/parallel/multi-step workflows)
+  - path: crawlq-ui/__tests__/canvas/README.md
+    status: CREATED
+    purpose: Test suite documentation (coverage goals, running tests)
+  - path: crawlq-ui/package.json
+    status: MODIFIED
+    purpose: Added test scripts (test, test:watch, test:coverage, test:canvas)
+  - path: .gcc/branches/feature-trace-canvas/commit.md
+    status: MODIFIED
+    purpose: Appended COMMIT 2
+  - path: .gcc/branches/feature-trace-canvas/log.md
+    status: MODIFIED
+    purpose: Appended Session 2 log
+  - path: .gcc/checkpoints/2026-02-12_22-15_feature-trace-canvas_2.md
+    status: CREATED
+    purpose: Checkpoint snapshot of COMMIT 2
+  - path: crawlq-ui/src/app/(protected)/canvas/layout.tsx
+    status: MODIFIED
+    purpose: Added useAuthorizedUser() hook for EU Cognito authentication
+  - path: CANVAS_AUTH_SETUP.md
+    status: CREATED
+    purpose: Authentication documentation (test account, flow diagram)
+  - path: crawlq-ui/src/lib/server-auth.ts
+    status: CREATED
+    purpose: Server-side JWT authentication utility (getUserIdFromRequest, requireAuth)
+  - path: crawlq-ui/src/app/api/canvas/save/route.ts
+    status: MODIFIED
+    purpose: Added requireAuth() for real userId extraction from JWT
+  - path: crawlq-ui/src/app/api/canvas/load/route.ts
+    status: MODIFIED
+    purpose: Added requireAuth() + marshall import for authenticated load
+  - path: crawlq-ui/src/components/canvas/workflow/WorkflowCanvas.tsx
+    status: MODIFIED
+    purpose: Bidirectional sync (store → local state) for load functionality
+  - path: crawlq-ui/src/components/canvas/workflow/WorkflowToolbar.tsx
+    status: MODIFIED
+    purpose: Added Load button with handleLoad() function
+  - path: .gcc/checkpoints/2026-02-13_00-45_feature-trace-canvas_5.md
+    status: CREATED
+    purpose: Checkpoint snapshot of COMMIT 5 (DynamoDB persistence)
+  - path: crawlq-ui/src/components/canvas/workflow/nodes/BranchNode.tsx
+    status: CREATED
+    purpose: A/B testing node with variation management (Sprint 2)
+  - path: crawlq-ui/src/lib/canvas/templates.ts
+    status: CREATED
+    purpose: 5 pre-built workflow templates library (Sprint 2)
+  - path: crawlq-ui/src/components/canvas/workflow/TemplateLibrary.tsx
+    status: CREATED
+    purpose: Template browser/import modal UI (Sprint 2)
+  - path: crawlq-ui/src/components/canvas/workflow/InteractiveTutorial.tsx
+    status: CREATED
+    purpose: 6-step onboarding tutorial for first-time users (Sprint 2)
+  - path: crawlq-ui/src/app/(protected)/canvas/page.tsx
+    status: MODIFIED
+    purpose: Added debug logging to diagnose webpack bundling error
+  - path: .gcc/checkpoints/2026-02-13_13-00_feature-trace-canvas_13.md
+    status: CREATED
+    purpose: Checkpoint snapshot of COMMIT 13 (Sprint 2 handoff)
+open_questions:
+  - Should canvas be accessible to guest users or auth-only? (Decision needed: Before private beta)
+  - Tldraw commercial license procurement timeline? (Decision needed: Before Sprint 2)
+  - Private beta user recruitment strategy — who are the 10 users? (Decision needed: This week)
+  - Performance validation — can React Flow handle 1000 nodes at <1s render? (Validate: After deployment)
+  - DynamoDB table deployment — who has AWS permissions to run CloudFormation? (Decision needed: Before deployment)
