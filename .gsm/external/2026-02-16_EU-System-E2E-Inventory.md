@@ -1,7 +1,7 @@
 # CrawlQ Athena EU — End-to-End System Inventory
 
-**Date:** 2026-02-16
-**Version:** 1.0
+**Date:** 2026-02-16 (Updated: 2026-02-16 15:00 UTC)
+**Version:** 2.0
 **Scope:** 36 Lambda functions, 25 API Gateway routes, 30 frontend endpoints, Amplify config, test infrastructure
 **Region:** eu-central-1 | **Account:** 680341090470
 
@@ -57,19 +57,19 @@
 | register | ndycr36k...on.aws | POST | None | {email, name, password} |
 | confirmSignup | vwz52t6f...on.aws | POST | None | {email, code} |
 | resendCode | weqo2wy3...on.aws | POST | None | {email} |
-| onboardUser | nbye6mq4...on.aws | POST | Optional JWT | {sessionId} + Authorization header |
+| onboardUser | nbye6mq4...on.aws | POST | **Required JWT (RS256)** | {sessionId} + Authorization header |
 | chatAthenaBot | fuuyi3tn...on.aws | POST | Optional JWT | {question, username, workspace, ...} |
 | chatJobQueue | msby2wga...on.aws | POST | Optional JWT | {query, user_id, session_id, options} |
 | chatJobStatus | d3fjrowu...on.aws | GET | Optional JWT | ?job_id=xxx |
 | getChatHistory | nsdsmanm...on.aws | POST | Required JWT | {username, workspace, page_num, session_id} |
 | uploadDeepDocument | rpajxt2r...on.aws | POST | Optional JWT | Binary (base64), ?sessionId&filename |
 | getDeepDocuments | a7ezbunp...on.aws | GET | Required JWT | Authorization header (JWT extraction) |
-| getDeepInsights | yocplzdg...on.aws | GET | Optional JWT | ?username&workspace&query |
-| getDocumentInsights | a3cr3h3f...on.aws | GET | Optional JWT | ?username&workspace&documentId |
+| getDeepInsights | yocplzdg...on.aws | GET | **Required JWT (RS256)** | ?name&query |
+| getDocumentInsights | a3cr3h3f...on.aws | GET | **Required JWT (RS256)** | ?username&workspace&documentId |
 | deepResearch | xcw7giwp...on.aws | POST | Optional JWT | {question, username, workspace, ...} |
 | webSearch | szwe24pa...on.aws | POST | Internal | {query, max_results} |
-| auditTrailStore | yhk3dw2d...on.aws | POST | Required JWT | {operation, lambda_name, user_id, ...} |
-| auditTrailVerify | 5lixjvl6...on.aws | POST | Required JWT | {audit_id} OR {start_date, end_date} |
+| auditTrailStore | yhk3dw2d...on.aws | POST | **Required JWT (ext) / None (internal)** | {operation, lambda_name, user_id, ...} |
+| auditTrailVerify | 5lixjvl6...on.aws | POST | **Required JWT (ext) / None (internal)** | {audit_id} OR {start_date, end_date} |
 | consentManager | etpphotej...on.aws | POST | Required JWT | {action, user_id, consent_type, ...} |
 | complianceEngine | odr7ton4...on.aws | POST | Required JWT | {action, params} |
 | traceExplainer | fvkvuah3...on.aws | POST | Optional | {query, answer, rag_chunks, kg_data} |
@@ -244,5 +244,56 @@ eu_process_deep_document
 ```
 
 ---
+
+---
+
+## 9. DEPLOYMENT LOG (2026-02-16)
+
+### Lambda Deployments (via `deploy_eu_lambdas.py` — ADR-043)
+- **Method:** Download-Overlay-Upload (preserves bundled deps)
+- **18/19 deployed** to eu-central-1
+- **1 missing:** `eu_deep_reasoner` — Lambda function not yet created in AWS
+- **Script:** `crawlq-athena-eu-backend/SemanticGraphEU/deploy_eu_lambdas.py`
+
+### Key Code Changes Deployed
+| Component | Change | Commit |
+|-----------|--------|--------|
+| `shared/jwt_auth.py` | Centralized RS256 JWT verification (Cognito JWKS) | Phase 1 |
+| `shared/document_extractor.py` | PyMuPDF + full DOCX parsing (headers, footnotes, lists) | 5cb078e |
+| `shared/cryptographic_delete.py` | GDPR Art. 17 cascade (8 tables + S3 + Neo4j) | 8f38c90 |
+| `shared/data_export.py` | GDPR Art. 20 portability (canvas_documents added) | 8f38c90 |
+| `EUGetDeepInsights/handler.py` | `require_auth()` — returns 401 | Phase 1 |
+| `EUGetDocumentInsights/handler.py` | `require_auth()` — returns 401 | Phase 1 |
+| `EUOnboardUser/handler.py` | `require_auth()` — replaces crash | f14543c |
+| `EUAuditTrailStore/handler.py` | JWT auth gate for Function URL calls | f14543c |
+| `EUAuditTrailVerify/handler.py` | JWT auth gate for Function URL calls | f14543c |
+| `EUChatAthenaBot/handler.py` | Pre-flight compliance + consent checks | Phase 4 |
+| `EUResponseKGExtractor/handler.py` | Neo4j write wired | Phase 3 |
+| `EUConversationMemory/handler.py` | session_id added | Phase 3 |
+| Frontend payload fixes | `documentId`→`query`, `workspaceName`→`name` | 15f294c |
+| Canvas feature gating | Server-side subscription + client-side gate | 56260fd |
+
+### Frontend (Amplify)
+- **App ID:** d45bl3mgpjnhy
+- **Latest commit:** 15f294c (payload sync fixes)
+- **Build status:** SUCCEED
+
+---
+
+## 10. SHARED MODULE INVENTORY
+
+All 19 core Lambdas include these shared modules (updated via overlay deploy):
+
+| Module | Purpose | Size |
+|--------|---------|------|
+| `shared/eu_config.py` | Region-specific configuration (DynamoDB tables, Neo4j, Bedrock models) | 4KB |
+| `shared/lambda_utils.py` | `normalize_event()`, `build_function_url_response()` | 3KB |
+| `shared/jwt_auth.py` | `require_auth()`, `optional_auth()`, RS256 JWKS verification | 6KB |
+| `shared/audit_trail.py` | `log_request()`, `log_response()` | 3KB |
+| `shared/compliance_metadata.py` | `enrich_response()` with compliance metadata | 2KB |
+| `shared/document_extractor.py` | Multi-format extractor (PDF, DOCX, XLSX, PPTX, etc.) | 20KB |
+| `shared/cryptographic_delete.py` | GDPR Art. 17 cascade delete | 5KB |
+| `shared/data_export.py` | GDPR Art. 20 data portability export | 4KB |
+| `_jwt_lib/` | Bundled PyJWT 2.11.0 with JWKS support | 21 files |
 
 *This document is a living manifest. Update when Lambda deployments, env vars, or endpoint wiring changes.*
