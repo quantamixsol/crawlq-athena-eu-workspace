@@ -14,5 +14,5 @@
 | feature-deep-research-eu | MERGED | feature-eu-standalone-app | Sprint 4: Deep research — 6-stage progress, TRACE-scored reports, export | 2026-02-12T09:00Z |
 | research-interactive-canvas | DONE | feature-eu-standalone-app | Research interactive canvas/board for TRACE visualization + workflow builder | 2026-02-12T20:30Z |
 | research-frictionmelt-integration | MERGED | feature-eu-standalone-app | FrictionMelt × Athena EU integration research — strategic planning for dual-product ecosystem | 2026-02-13T17:00Z |
-| feature-trace-canvas | WORKING | feature-eu-standalone-app | TRACE Canvas Sprint 2 IN PROGRESS — Workflow chaining (output→input), branch/variation system, template library | 2026-02-13T02:00Z |
+| feature-trace-canvas | MERGED | feature-eu-standalone-app | TRACE Canvas — 44 files integrated into main app, DynamoDB table active, Pallas unified 228/0/32 | 2026-02-15T02:30Z |
 | feature-frictionmelt-integration | MERGED | research-frictionmelt-integration | Phase 1 implementation: Event emission + insights consumption + UI (Athena EU side only, per ADR-026) — FEATURE COMPLETE | 2026-02-13T17:00Z |

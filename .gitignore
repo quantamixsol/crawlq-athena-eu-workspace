@@ -1,0 +1,13 @@
+# Large binary files - keep summaries, not originals
+.gsm/external/*.pdf
+.gsm/external/*.PDF
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temp files
+*.tmp
+*.swp
+*~

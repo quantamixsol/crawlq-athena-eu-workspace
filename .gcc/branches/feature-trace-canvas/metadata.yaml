@@ -1,8 +1,8 @@
 branch: feature-trace-canvas
 parent: feature-eu-standalone-app
-status: HANDOFF
+status: WORKING
 created: 2026-02-12T21:00:00Z
-last_updated: 2026-02-13T13:00:00Z
+last_updated: 2026-02-14T16:00:00Z
 locked_by: null
 environment:
   runtime: node-20
@@ -153,6 +153,30 @@ file_tree:
   - path: .gcc/checkpoints/2026-02-13_13-00_feature-trace-canvas_13.md
     status: CREATED
     purpose: Checkpoint snapshot of COMMIT 13 (Sprint 2 handoff)
+  - path: crawlq-athena-eu-canvas/src/lib/canvas/exampleWorkflows.ts
+    status: CREATED
+    purpose: 6 multi-chain example workflows with simulated results and topology-aware conversion
+  - path: crawlq-athena-eu-canvas/src/components/canvas/workflow/ExamplesPanel.tsx
+    status: CREATED
+    purpose: Right sidebar with SVG diagrams, pattern filtering, load blank/results modes
+  - path: crawlq-athena-eu-canvas/src/components/canvas/workflow/WorkflowCanvas.tsx
+    status: MODIFIED
+    purpose: Added ExamplesPanel to canvas layout (right sidebar)
+  - path: crawlq-athena-eu-canvas/src/components/canvas/workflow/WorkflowToolbar.tsx
+    status: MODIFIED
+    purpose: Added Templates button with TemplateLibrary modal
+  - path: crawlq-athena-eu-canvas/src/components/canvas/shared/AutoSaveProvider.tsx
+    status: CREATED
+    purpose: 30s debounced autosave (side-effect component, renders null)
+  - path: crawlq-athena-eu-canvas/src/components/canvas/shared/Notification.tsx
+    status: MODIFIED
+    purpose: Max 5 notifications limit
+  - path: crawlq-athena-eu-canvas/src/lib/canvas/canvasStore.ts
+    status: MODIFIED
+    purpose: _isSaving concurrent save guard
+  - path: crawlq-athena-eu-canvas/src/types/canvas.ts
+    status: MODIFIED
+    purpose: Updated IBranchNodeData.onAddVariation type signature
 open_questions:
   - Should canvas be accessible to guest users or auth-only? (Decision needed: Before private beta)
   - Tldraw commercial license procurement timeline? (Decision needed: Before Sprint 2)

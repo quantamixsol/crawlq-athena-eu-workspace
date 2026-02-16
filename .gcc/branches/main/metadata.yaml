@@ -2,11 +2,47 @@ branch: main
 parent: null
 status: WORKING
 created: 2026-02-09T22:00:00Z
-last_updated: 2026-02-09T22:00:00Z
+last_updated: 2026-02-16T11:30:00Z
 locked_by: null
 environment:
   runtime: python3.10
   framework: next.js-14
   region: eu-central-1
-file_tree: []
-open_questions: []
+file_tree:
+  - path: crawlq-chat-athena-eu-frontend/src/config/region-config.ts
+    status: MODIFIED
+    purpose: All 35 EU endpoints use Lambda Function URLs directly (no API Gateway timeout)
+  - path: crawlq-athena-eu-backend/SemanticGraphEU/shared/eu_config.py
+    status: MODIFIED
+    purpose: Added EU_DEEP_RESEARCH_TABLE, removed EU_ATHENA_TRAINING_FUNCTION, fixed eu_create_project default
+  - path: crawlq-athena-eu-backend/SemanticGraphEU/EUUploadDeepDocument/helpers.py
+    status: MODIFIED
+    purpose: Async graph builder + insights (Event invocation), removed train_athena
+  - path: crawlq-athena-eu-backend/SemanticGraphEU/EUOnboardUser/helpers.py
+    status: MODIFIED
+    purpose: Removed invoke_train_athena function + call, simplified to graph_builder only (KG+RAG)
+  - path: crawlq-athena-eu-backend/SemanticGraphEU/EUProcessDeepDocument/helpers.py
+    status: MODIFIED
+    purpose: Removed rag_training task, simplified to graph_builder only (KG+RAG)
+  - path: crawlq-athena-eu-backend/SemanticGraphEU/tests/conftest.py
+    status: MODIFIED
+    purpose: Fixed CREATE_PROJECT_FUNCTION to eu_create_project, removed ATHENA_TRAINING_FUNCTION
+  - path: crawlq-chat-athena-eu-frontend/src/app/api/canvas/execute-llm/route.ts
+    status: MODIFIED
+    purpose: Direct Bedrock InvokeModel (Claude Opus 4.6)
+  - path: crawlq-chat-athena-eu-frontend/src/components/canvas/workflow/nodes/LLMNode.tsx
+    status: MODIFIED
+    purpose: Updated model options — Claude Opus 4.6 + Sonnet 4.5
+  - path: crawlq-chat-athena-eu-frontend/.env.eu.example
+    status: MODIFIED
+    purpose: Cleaned up — removed 19 orphan NEXT_PUBLIC_EU_*_URL vars, added 4 actually-used server-side vars
+  - path: .gsm/external/2026-02-16_EU-System-E2E-Inventory.md
+    status: CREATED
+    purpose: Living E2E system manifest — 36 Lambdas, 30 endpoints, API Gateway, Amplify env vars
+  - path: .gsm/decisions/ADR-042-eu-system-e2e-inventory.md
+    status: CREATED
+    purpose: Configuration audit ADR with 8 actionable findings
+open_questions:
+  - Full Pallas E2E regression needed across all 10 users before launch
+  - Set AWS creds for friction emit route (or refactor to DYNAMO_* keys)
+  - Fix broken API Gateway POST /chat integration (fk0y5gi)

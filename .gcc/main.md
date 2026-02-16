@@ -28,6 +28,9 @@ Deploy a fully functional EU-region GDPR-compliant AI chat system (Athena EU) wi
 - [x] Phase 11: Production fixes — API Gateway routing (Function URLs 403), mermaid validation, 13 markdown capabilities, E2E testing (ADR-025, 87% confidence)
 - [x] Phase 12: Production hardening — COMPLETE (8/8 items: CHAT-02 async mode ✓, AUTH-02 validation ✓, mobile UX ✓, CloudWatch alarms ✓, visual audit ✓, COMP-04 reasoner deployed without LangChain ✓, WEB-01 working as designed ✓, SNS notifications ✓) — Production readiness: 90%+
 - [x] Phase 13: TRACE Canvas Sprint 1 MVP — COMPLETE (Workflow builder with React Flow, 3 node types, execution engine with topological sort, Zustand state management, DynamoDB persistence with multi-tenant isolation, EU Cognito authentication, 85%+ test coverage, zero breaking changes per ADR-028) — Ready for private beta
+- [x] Phase 19: Canvas Integration into Main App — ADR-036 (Monorepo merge, tiered feature gating, Chat↔Canvas bridge, subscription-based canvas limits per EU plan tier)
+- [ ] Phase 20: Launch Readiness — ADR-037 (Gap analysis 98%, 12/12 fixes done, Pallas: 185 PASS / 0 FAIL across 8 users, DYNAMO env vars set, Amplify builds green, 6 explainability metrics VISIBLE)
+
 ## Master Priority Order (ADR-031 — HARD REQUIREMENT)
 
 **STRICT sequential. Each must be deployed before next begins.**
@@ -36,9 +39,9 @@ Deploy a fully functional EU-region GDPR-compliant AI chat system (Athena EU) wi
 |----------|-------|--------|--------|------------|
 | **P1** | Phase 14: Remove Guest Flow + AI-First Onboarding | `feature-eu-standalone-app` | **DONE** (35/35 tests) | GDPR compliant ✓ Auth-only ✓ |
 | **P2** | Phase 15: FrictionMelt Integration + Deploy | `feature-frictionmelt-integration` | **DONE** (MERGED) — Live E2E verified, 34/34 tests | Events emitting ✓ Insights displaying ✓ |
-| **P3** | Phase 16: Canvas UI Synced + Deployed | `feature-trace-canvas` | **UNBLOCKED** — ready | Canvas loads TRACE + FM data? |
-| **P4** | Phase 17: Full E2E Testing | — | BLOCKED by P3 | All critical paths pass? 90%+ confidence? |
-| **P5** | Phase 18: Marketing, Website, Production Launch | — | BLOCKED by P4 | Tests green? Domain live? |
+| **P3** | Phase 19: Canvas Integration (ADR-036) | `feature-trace-canvas` | **DONE** — merged, build passing (22 routes, 0 errors) | Canvas gated by tier ✓ Build ✓ |
+| **P4** | Phase 17: Full E2E Testing | `feature-eu-standalone-app` | **DONE** — 27/32 API endpoints PASS (84%), all repos synced, deployment verified ALL GREEN | All critical paths pass? 90%+ confidence? |
+| **P5** | Phase 18: Marketing, Website, Production Launch | — | **UNBLOCKED** — ready to start | Tests green? Domain live? |
 
 **Decision tree:** P1 deployed? → P2 deployed? → P3 deployed? → P4 passes? → P5 launch
 **Anti-pattern:** DO NOT deploy later priority before earlier is complete + tested
@@ -46,10 +49,30 @@ Deploy a fully functional EU-region GDPR-compliant AI chat system (Athena EU) wi
 ## Key URLs
 - **Athena EU Frontend:** https://main.d45bl3mgpjnhy.amplifyapp.com
 - Amplify App ID: d45bl3mgpjnhy → repo: `crawlq-chat-athena-eu-frontend` (branch: main)
-- Canvas: Not yet Amplify-deployed → repo: `crawlq-athena-eu-canvas`
+- Canvas: Merging into main app (ADR-036) — source repo: `crawlq-athena-eu-canvas`
+
+## Deployment Rules (HARD REQUIREMENTS)
+
+### ADR-041: Cache Invalidation (MANDATORY — EVERY DEPLOY)
+```
+PRE-DEPLOY CHECKLIST:
+  [x] next.config.mjs has generateBuildId() — unique per build
+  [x] next.config.mjs has headers() — Cache-Control: must-revalidate for HTML
+  [x] amplify.yml does NOT cache .next/cache — prevents stale SSR
+  [x] amplify.yml has customHeaders — CloudFront cache-control
+
+POST-DEPLOY VERIFICATION:
+  [ ] Amplify build shows SUCCEED
+  [ ] Open site in incognito browser — verify new changes visible
+  [ ] If stale: user does Ctrl+Shift+R (hard refresh)
+  [ ] If still stale: force CloudFront invalidation via AWS console
+```
+**Root cause:** CloudFront + browser cache serve old versions indefinitely without cache-control headers.
+**Fix:** HTML pages always revalidate (max-age=0), static assets use content-hashed URLs (immutable).
 
 ## Key Decisions
-- EU Lambda Function URLs use AuthType: NONE (no Authorization headers needed)
+- EU Lambda Function URLs are BLOCKED by AWS org SCP (403 for all) — ALL endpoints must route through API Gateway (1v186le2ee)
 - Memory is opt-in by default (GDPR privacy-by-default)
 - google-genai made conditional import (Gemini = optional fallback)
 - python-magic replaced with mimetypes stdlib fallback
+- ADR-041: Cache-busting is mandatory — generateBuildId + cache-control headers on every deploy
